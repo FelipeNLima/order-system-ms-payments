@@ -1,0 +1,31 @@
+{
+  "extends": "@rocketseat/eslint-config/react",
+  "plugins": [
+    "unused-imports",
+    "react-hooks"
+  ],
+  "rules": {
+    "react-hooks/exhaustive-deps": "off",
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "react/display-name": "off",
+    "unused-imports/no-unused-imports-ts": 1,
+    "prettier/prettier": [
+      "error",
+      {
+        "bracketSpacing": true,
+        "endOfLine": "lf",
+        "insertPragma": false,
+        "jsxSingleQuote": true,
+        "jsxBracketSameLine": false,
+        "printWidth": 80,
+        "proseWrap": "preserve",
+        "semi": false,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "useTabs": true
+      }
+    ]
+  }
+}
