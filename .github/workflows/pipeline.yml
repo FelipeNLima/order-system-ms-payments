@@ -42,4 +42,4 @@ jobs:
           CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
         run: |
           aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
-          kubectl apply -f ../api-svc
+          kubectl apply -f api-svc
