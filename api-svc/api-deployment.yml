@@ -16,11 +16,9 @@ spec:
     spec:
       containers:
         - name: order-system-ms-payments-api-container
-          image: 575258201927.dkr.ecr.us-east-1.amazonaws.com/order-system-payments:lastest
+          image: 575258201927.dkr.ecr.us-east-1.amazonaws.com/order-system-payments:latest
           ports:
             - containerPort: 3000
-          imagePullSecrets:
-            - name: mysecret
           envFrom:
             - configMapRef:
                 name: api-configmap
