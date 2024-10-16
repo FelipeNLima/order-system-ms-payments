@@ -1,10 +1,13 @@
+name: DEPLOY AWS
+
 on:
   push:
-    branches: [master]
-  pull_request:
-    branches: master
+    branches:
+      - master
 
-name: DEPLOY AWS
+permissions:
+  id-token: write
+  contents: read
 
 stages:
   - stage: [{ CI }]
@@ -64,5 +67,5 @@ stages:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
         run: |
-          kubectl apply -f ./api-svc
+          kubectl apply -f ../../api-svc
           aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.CLUSTER_NAME}}
