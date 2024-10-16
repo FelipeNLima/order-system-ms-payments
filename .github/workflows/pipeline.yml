@@ -36,7 +36,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Configure AWS credentials
-        if: steps.build-image.outcome == 'failure'
+        if: steps.build-image.outcome != 'failure'
         run: |
           aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.CLUSTER_NAME}}
           kubectl apply -f ../../api-svc
