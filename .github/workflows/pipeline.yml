@@ -35,8 +35,11 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Configure AWS credentials
+      - name: Deploy Aws EKS
         if: steps.build-image.outcome != 'failure'
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
         run: |
-          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.CLUSTER_NAME}}
+          aws eks update-kubeconfig --region $AWS_REGION --name $CLUSTER_NAME
           kubectl apply -f ../../api-svc
