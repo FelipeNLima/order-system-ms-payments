@@ -11,7 +11,7 @@ COPY . .
 
 # Install app dependencies
 RUN yarn
-# Generate prisma client, leave out if generating in `postinstall` script
+# Generate prisma client
 RUN yarn generate
 
 COPY . .

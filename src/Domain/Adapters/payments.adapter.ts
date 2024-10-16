@@ -1,6 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { QRCodeService } from 'src/Infrastructure/Apis/qrcode.service';
+import { ConfirmPaymentEvent } from 'src/Infrastructure/Events/confirmPaymentEvent';
 import { PrismaService } from '../../Infrastructure/Apis/prisma.service';
+import { PaymentEvents } from '../Enums/paymentStatus';
 import { OrdersPayments } from '../Interfaces/orders';
 import { Payments } from '../Interfaces/payments';
 import { PaymentsRepository } from '../Repositories/paymentsRepository';
@@ -10,6 +13,7 @@ export class PaymentsAdapter implements PaymentsRepository {
   constructor(
     private prisma: PrismaService,
     private qrCode: QRCodeService,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   async getPaymentsById(id: number): Promise<Payments | null> {
@@ -72,11 +76,21 @@ export class PaymentsAdapter implements PaymentsRepository {
           orderID: order?.orderID,
         };
 
-        return await this.prisma.payments.create({
+        const response = await this.prisma.payments.create({
           data: {
             ...payments,
           },
         });
+
+        // WEBHOOK PARA CONFIRMAR PAGAMENTO
+        if (response) {
+          const payload = new ConfirmPaymentEvent({
+            payload: response,
+          });
+          this.eventEmitter.emit(PaymentEvents.CONFIRM_PAYMENT, payload);
+        }
+
+        return response;
       }
     } catch (error) {
       const message = error?.meta?.target || error?.meta?.details;
