@@ -65,4 +65,4 @@ stages:
           aws-region: ${{ secrets.AWS_REGION }}
         run: |
           kubectl apply -f ./api-svc
-          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ordersystem-ms-payments-cluster
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.CLUSTER_NAME}}

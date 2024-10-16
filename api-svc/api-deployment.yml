@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: order-system-ms-payments-api-container
-          image: felipelima94/order-system-api:lastest
+          image: 575258201927.dkr.ecr.us-east-1.amazonaws.com/order-system-payments:lastest
           ports:
             - containerPort: 3000
           envFrom:
