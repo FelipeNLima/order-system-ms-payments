@@ -9,14 +9,10 @@ permissions:
   id-token: write
   contents: read
 
-stages:
-  - stage: [{ CI }]
-    dependsOn: []
-    displayName: "Build Docker Image"
-    jobs:
-      deploy:
-        name: Deploy ECR
-        runs-on: ubuntu-latest
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Install Octopus CLI
         uses: OctopusDeploy/install-octopus-cli-action@v1.1.1
@@ -49,23 +45,3 @@ stages:
           echo "Pushing image to ECR..."
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
-  - stage: [{ CD }]
-    displayName: "Deploy EKS"
-    dependsOn:
-      - CI
-    condition: succeeded()
-    jobs:
-      deploy:
-        name: Deploy EKS
-        runs-on: ubuntu-latest
-    steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-        run: |
-          kubectl apply -f ../../api-svc
-          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.CLUSTER_NAME}}
