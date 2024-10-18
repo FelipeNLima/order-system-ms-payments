@@ -1,8 +1,9 @@
 {
-  "moduleFileExtensions": ["json", "ts"],
+  "moduleFileExtensions": ["js", "json", "ts"],
   "rootDir": ".",
   "testEnvironment": "node",
-  "testRegex": [".e2e-spec.ts$", ".integration.spec.ts$"],
+  "testRegex": ".e2e-spec.ts$",
+  "setupFilesAfterEnv": ["<rootDir>/singleton.ts"],
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   }

@@ -1,0 +1,17 @@
+version: '4.34.3'
+
+services:
+  test-runner:
+    image: mysql:latest
+    restart: always
+    container_name: dbTest
+    env_file: ./.env.test
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQLDB_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQLDB_DATABASE
+    ports:
+      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    expose:
+      - $MYSQLDB_LOCAL_PORT
+    volumes:
+      - db:/var/lib/mysql

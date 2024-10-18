@@ -24,7 +24,7 @@ export class QRCodeService extends BaseHttpRequestService {
         data: body,
       });
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error?.response?.data?.message);
     }
   }
 }

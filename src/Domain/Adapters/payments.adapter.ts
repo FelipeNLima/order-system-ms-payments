@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { QRCodeService } from 'src/Infrastructure/Apis/qrcode.service';
-import { ConfirmPaymentEvent } from 'src/Infrastructure/Events/confirmPaymentEvent';
 import { PrismaService } from '../../Infrastructure/Apis/prisma.service';
+import { QRCodeService } from '../../Infrastructure/Apis/qrcode.service';
+import { ConfirmPaymentEvent } from '../../Infrastructure/Events/confirmPaymentEvent';
 import { PaymentEvents } from '../Enums/paymentStatus';
 import { OrdersPayments } from '../Interfaces/orders';
 import { Payments } from '../Interfaces/payments';
@@ -11,9 +11,9 @@ import { PaymentsRepository } from '../Repositories/paymentsRepository';
 @Injectable()
 export class PaymentsAdapter implements PaymentsRepository {
   constructor(
-    private prisma: PrismaService,
-    private qrCode: QRCodeService,
-    private eventEmitter: EventEmitter2,
+    private readonly prisma: PrismaService,
+    private readonly qrCode: QRCodeService,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   async getPaymentsById(id: number): Promise<Payments | null> {
@@ -57,7 +57,7 @@ export class PaymentsAdapter implements PaymentsRepository {
       const body = {
         description: `QRCODE-${order.customerID}-${new Date()}`,
         external_reference: order?.salesOrderID,
-        title: 'OrderSystem',
+        title: 'Teste',
         total_amount: order?.amount,
         cash_out: {
           amount: 0,
@@ -77,9 +77,7 @@ export class PaymentsAdapter implements PaymentsRepository {
         };
 
         const response = await this.prisma.payments.create({
-          data: {
-            ...payments,
-          },
+          data: { ...payments },
         });
 
         // WEBHOOK PARA CONFIRMAR PAGAMENTO
@@ -93,7 +91,8 @@ export class PaymentsAdapter implements PaymentsRepository {
         return response;
       }
     } catch (error) {
-      const message = error?.meta?.target || error?.meta?.details;
+      const message =
+        error?.message || error?.meta?.target || error?.meta?.details;
       throw new BadRequestException(message);
     }
   }

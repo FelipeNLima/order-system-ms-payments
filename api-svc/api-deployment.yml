@@ -14,11 +14,17 @@ spec:
       labels:
         app: ordersystem-ms-payments-deployment
     spec:
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: order-system-ms-payments-api-container
           image: 575258201927.dkr.ecr.us-east-1.amazonaws.com/order-system-payments:latest
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
           ports:
-            - containerPort: 3000
+            - containerPort: 80
           envFrom:
             - configMapRef:
                 name: api-configmap
