@@ -24,6 +24,7 @@ ENV DATABASE_URL="uri"
 ENV TOKEN_MERCADO_PAGO="uri"
 ENV USERID="uri"
 ENV POSID="uri"
+ENV NODE_LOCAL_PORT="uri"
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
