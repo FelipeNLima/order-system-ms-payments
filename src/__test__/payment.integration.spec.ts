@@ -3,12 +3,12 @@ import { INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
+import { PrismaClient } from '@prisma/client';
 import { MySqlContainer, StartedMySqlContainer } from '@testcontainers/mysql';
 import { execSync } from 'child_process';
 import { randomUUID } from 'crypto';
 import mysql, { Connection } from 'mysql2';
 import request from 'supertest';
-import { PrismaClient } from '../../prisma/generated';
 import { PaymentsService } from '../Application/services/payments.service';
 import { PaymentsAdapter } from '../Domain/Adapters/payments.adapter';
 import { OrdersPayments } from '../Domain/Interfaces/orders';
@@ -20,7 +20,7 @@ import { HealthController } from '../Presentation/Health/health.controller';
 import { PrismaHealthIndicator } from '../Presentation/Health/PrismaHealthIndicator.service';
 import { PaymentsController } from '../Presentation/Payments/payments.controller';
 
-let container: StartedMySqlContainer; // importamos do pacote testcontainers/postgresql
+let container: StartedMySqlContainer; // importamos do pacote testcontainers/mysql
 let prismaClient: PrismaClient; // importamos do Prisma Client
 let app: INestApplication; // importamos nestjs common
 let urlConnection: string; // a url do banco que sera criada pelo testcontainers
@@ -50,6 +50,13 @@ beforeAll(async () => {
     },
   });
 
+  // drop schema and create a new one
+  execSync(`npx prisma migrate reset --force`, {
+    env: {
+      ...process.env,
+      DATABASE_URL: urlConnection,
+    },
+  });
   execSync(`npx prisma generate && npx prisma migrate deploy`, {
     env: {
       ...process.env,

@@ -1,0 +1,14 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "roots": ["src", "test"],
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "testRegex": ".e2e-spec.ts$",
+  "collectCoverageFrom": ["src/**/*.{js,jsx,ts,tsx}"],
+  "coverageDirectory": "../coverage",
+  "coverageReporters": ["lcov", "text"],
+  "testEnvironment": "node",
+  "verbose": true,
+  "setupFilesAfterEnv": ["<rootDir>/singleton.ts"]
+}
