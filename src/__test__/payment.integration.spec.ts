@@ -41,26 +41,19 @@ beforeAll(async () => {
   process.env.DATABASE_URL = container.getConnectionUri();
   urlConnection = container.getConnectionUri();
 
-  // drop schema and create a new one
-  execSync(`npx prisma migrate reset --force`, {
-    env: {
-      ...process.env,
-      DATABASE_URL: urlConnection,
-    },
-  });
-  execSync(`npx prisma generate && npx prisma migrate deploy`, {
-    env: {
-      ...process.env,
-      DATABASE_URL: urlConnection,
-    },
-  });
-
   // create a new instance of PrismaClient with the connection string
   prismaClient = new PrismaClient({
     datasources: {
       db: {
         url: urlConnection,
       },
+    },
+  });
+
+  execSync(`npx prisma generate && npx prisma migrate deploy`, {
+    env: {
+      ...process.env,
+      DATABASE_URL: urlConnection,
     },
   });
 
