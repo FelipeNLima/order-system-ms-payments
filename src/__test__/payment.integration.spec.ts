@@ -55,6 +55,15 @@ beforeAll(async () => {
     },
   });
 
+  // create a new instance of PrismaClient with the connection string
+  prismaClient = new PrismaClient({
+    datasources: {
+      db: {
+        url: urlConnection,
+      },
+    },
+  });
+
   // start the nestjs application
   const module: TestingModule = await Test.createTestingModule({
     imports: [HttpModule],
@@ -72,16 +81,6 @@ beforeAll(async () => {
   }).compile();
 
   app = module.createNestApplication();
-
-  // create a new instance of PrismaClient with the connection string
-  prismaClient = new PrismaClient({
-    datasources: {
-      db: {
-        url: urlConnection,
-      },
-    },
-  });
-
   await app.init();
 });
 
