@@ -1,0 +1,46 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run tests
+        run: |
+          yarn test
+
+  # sonar:
+  #   runs-on: ubuntu-latest
+  #   needs: test
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v2
+
+  #     - name: Run SonarQube Scan
+  #       uses: sonarsource/sonar-scanner-action@v2.0.0
+  #       with:
+  #         sonar-project-key: seu_projeto
+  #         sonar-host-url: http://seu-sonarqube:9000
+  #         sonar-login: ${{ secrets.SONAR_TOKEN }} # Adicione o token nas secrets do seu repositório
+  #         sonar-scanner-options: |
+  #           -Dsonar.sources=.
+  #           -Dsonar.language=js
+  #           -Dsonar.tests=.
+  #           -Dsonar.test.inclusions=**/*.spec.ts  # Altere conforme sua estrutura de testes

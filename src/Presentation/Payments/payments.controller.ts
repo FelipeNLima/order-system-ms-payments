@@ -11,8 +11,8 @@ import {
 import { ApiHeader, ApiTags } from '@nestjs/swagger';
 import { PaymentsService } from '../../Application/services/payments.service';
 import { Roles } from '../../Infrastructure/Guard/decorators/roles.decorator';
-import { PaymentsDto } from './dtos/payments.dto';
 import { OrdersPaymentDto } from './dtos/orders.dto';
+import { PaymentsDto } from './dtos/payments.dto';
 
 @ApiTags('Pagamentos')
 @Controller('payments')
@@ -34,7 +34,7 @@ export class PaymentsController {
     }
   }
 
-  @Get(':orderID')
+  @Get('orderNumber/:orderID')
   @ApiHeader({
     name: 'user',
     description: 'ID do usuário ADMIN',

@@ -1,7 +1,7 @@
 export enum PaymentStatus {
-  'PENDING' = 'PENDING',
-  'PAID' = 'PAID',
-  'NOT_PAID' = 'NOT_PAID',
+  PENDING = 'PENDING',
+  PAID = 'PAID',
+  NOT_PAID = 'NOT_PAID',
 }
 
 export enum PaymentEvents {

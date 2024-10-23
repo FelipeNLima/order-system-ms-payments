@@ -13,11 +13,10 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "set ENVFILE=.env.test && jest -i",
+    "test": "set ENVFILE=.env.test && jest --silent -i",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
     "doc": "npx @compodoc/compodoc -p tsconfig.json -s",
     "migrate:test": "dotenv -e .env.test -- npx prisma migrate deploy --preview-feature",
     "migrate:dev:test": "dotenv -e .env.test -- prisma migrate dev --preview-feature",
@@ -47,7 +46,7 @@
     "axios": "^1.7.7",
     "class-validator": "^0.14.1",
     "date-fns": "^4.1.0",
-    "mysql": "^2.18.1",
+    "mysql2": "^3.11.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -94,16 +93,20 @@
     "collectCoverageFrom": [
       "src/**/*.ts",
       "!src/main.ts",
+      "!src/swagger.ts",
+      "!src/Infrastructure/Guard/*.ts",
       "!src/app.module.ts",
       "!src/**/*.module.ts",
       "!src/**/*.dto.ts",
-      "!src/**/*.interface.ts"
+      "!src/**/*.interface.ts",
+      "!src/Presentation/Health/*.ts",
+      "!src/__test__/mock/*.ts"
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 30,
-        "branches": 10,
-        "functions": 10,
+        "statements": 80,
+        "branches": 80,
+        "functions": 80,
         "lines": 30
       }
     },
