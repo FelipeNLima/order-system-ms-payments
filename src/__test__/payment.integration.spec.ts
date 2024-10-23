@@ -57,7 +57,7 @@ beforeAll(async () => {
       DATABASE_URL: urlConnection,
     },
   });
-  execSync(`npx prisma migrate deploy`, {
+  execSync(`npx prisma generate && npx prisma migrate deploy`, {
     env: {
       ...process.env,
       DATABASE_URL: urlConnection,
