@@ -34,7 +34,7 @@ beforeAll(async () => {
     user: container.getUsername(),
     password: container.getRootPassword(),
     database: container.getDatabase(),
-    connectTimeout: 10000,
+    connectTimeout: 20000,
   });
 
   client.connect();
@@ -50,7 +50,14 @@ beforeAll(async () => {
     },
   });
 
-  execSync(`npx prisma db push`, {
+  // drop schema and create a new one
+  execSync(`npx prisma migrate reset --force`, {
+    env: {
+      ...process.env,
+      DATABASE_URL: urlConnection,
+    },
+  });
+  execSync(`npx prisma migrate deploy`, {
     env: {
       ...process.env,
       DATABASE_URL: urlConnection,
