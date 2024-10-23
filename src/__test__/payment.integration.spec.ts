@@ -24,7 +24,7 @@ let container: StartedMySqlContainer; // importamos do pacote testcontainers/mys
 let prismaClient: PrismaClient; // importamos do Prisma Client
 let app: INestApplication; // importamos nestjs common
 let urlConnection: string; // a url do banco que sera criada pelo testcontainers
-let client: Connection; // importamos do pacote pg
+let client: Connection; // importamos do pacote mysql
 
 beforeAll(async () => {
   container = await new MySqlContainer().start();
@@ -39,7 +39,7 @@ beforeAll(async () => {
 
   client.connect();
   process.env.DATABASE_URL = container.getConnectionUri();
-  urlConnection = container.getConnectionUri();
+  urlConnection = process.env.DATABASE_URL;
 
   // create a new instance of PrismaClient with the connection string
   prismaClient = new PrismaClient({
@@ -57,7 +57,13 @@ beforeAll(async () => {
       DATABASE_URL: urlConnection,
     },
   });
-  execSync(`npx prisma generate && npx prisma migrate deploy`, {
+  execSync(`npx prisma generate`, {
+    env: {
+      ...process.env,
+      DATABASE_URL: urlConnection,
+    },
+  });
+  execSync(`npx prisma migrate deploy`, {
     env: {
       ...process.env,
       DATABASE_URL: urlConnection,
