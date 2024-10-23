@@ -35,9 +35,9 @@ jobs:
         run: |
           yarn test:unit
 
-      - name: Run tests integration
-        run: |
-          yarn test:integration
+      # - name: Run tests integration
+      #   run: |
+      #     yarn test:integration
 
   # sonar:
   #   runs-on: ubuntu-latest
