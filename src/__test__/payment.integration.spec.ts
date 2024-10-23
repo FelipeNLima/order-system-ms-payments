@@ -7,7 +7,7 @@ import { PrismaClient } from '@prisma/client';
 import { MySqlContainer, StartedMySqlContainer } from '@testcontainers/mysql';
 import { execSync } from 'child_process';
 import { randomUUID } from 'crypto';
-import mysql, { Connection } from 'mysql2';
+import { Connection } from 'mysql2';
 import request from 'supertest';
 import { PaymentsService } from '../Application/services/payments.service';
 import { PaymentsAdapter } from '../Domain/Adapters/payments.adapter';
@@ -28,18 +28,10 @@ let client: Connection; // importamos do pacote mysql
 
 beforeAll(async () => {
   container = await new MySqlContainer().start();
-  client = mysql.createConnection({
-    host: container.getHost(),
-    port: container.getPort(),
-    user: container.getUsername(),
-    password: container.getRootPassword(),
-    database: container.getDatabase(),
-    connectTimeout: 20000,
-  });
+  const urlConnection = `mysql://root:1234@localhost:3307/dbMySql`;
 
   client.connect();
-  process.env.DATABASE_URL = container.getConnectionUri();
-  urlConnection = process.env.DATABASE_URL;
+  process.env.DATABASE_URL = urlConnection;
 
   // create a new instance of PrismaClient with the connection string
   prismaClient = new PrismaClient({

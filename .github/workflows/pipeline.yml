@@ -7,6 +7,13 @@ on:
   pull_request:
 
 jobs:
+  config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run tests in a container
+        run: docker run --rm -it felipelima94/order-system-db:latest
+
   test:
     runs-on: ubuntu-latest
     steps:
