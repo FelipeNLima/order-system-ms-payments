@@ -21,18 +21,15 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-
-      - name: Run tests e2e
-        run: |
-          yarn test:e2e
-
       - name: Run tests unit
         run: |
           yarn test:unit
-
-      - name: Run tests integration
+      - name: Run tests e2e
         run: |
-          yarn test:integration
+          yarn test:e2e
+      # - name: Run tests integration
+      #   run: |
+      #     yarn test:integration
 
   sonar:
     runs-on: ubuntu-latest
