@@ -8,6 +8,7 @@ import { MySqlContainer, StartedMySqlContainer } from '@testcontainers/mysql';
 import { execSync } from 'child_process';
 import { randomUUID } from 'crypto';
 import mysql, { Connection } from 'mysql2';
+import { ConsumerService } from 'src/Infrastructure/RabbitMQ/rabbitMQ.service';
 import request from 'supertest';
 import { PaymentsService } from '../Application/services/payments.service';
 import { PaymentsAdapter } from '../Domain/Adapters/payments.adapter';
@@ -57,12 +58,12 @@ beforeAll(async () => {
       DATABASE_URL: urlConnection,
     },
   });
-  execSync(`npx prisma generate`, {
-    env: {
-      ...process.env,
-      DATABASE_URL: urlConnection,
-    },
-  });
+  // execSync(`npx prisma generate`, {
+  //   env: {
+  //     ...process.env,
+  //     DATABASE_URL: urlConnection,
+  //   },
+  // });
   execSync(`npx prisma migrate deploy`, {
     env: {
       ...process.env,
@@ -82,6 +83,7 @@ beforeAll(async () => {
       ConfigService,
       ConfirmPaymentListener,
       EventEmitter2,
+      ConsumerService,
       { provide: PaymentsRepository, useClass: PaymentsAdapter },
     ],
   }).compile();

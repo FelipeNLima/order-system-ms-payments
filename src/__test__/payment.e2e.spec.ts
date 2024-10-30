@@ -12,6 +12,7 @@ import { QRCodeService } from '../Infrastructure/Apis/qrcode.service';
 import { ConfirmPaymentListener } from '../Infrastructure/Events/listeners/confirmPayment.listener';
 import { HealthController } from '../Presentation/Health/health.controller';
 import { PaymentsController } from '../Presentation/Payments/payments.controller';
+import { ConsumerService } from 'src/Infrastructure/RabbitMQ/rabbitMQ.service';
 
 describe('E2E Test Payments', () => {
   let paymentController: PaymentsController;
@@ -41,6 +42,7 @@ describe('E2E Test Payments', () => {
         ConfigService,
         ConfirmPaymentListener,
         EventEmitter2,
+        ConsumerService,
         { provide: PaymentsRepository, useClass: PaymentsAdapter },
       ],
     })
