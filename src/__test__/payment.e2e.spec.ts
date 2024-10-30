@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ConsumerService } from 'src/Infrastructure/RabbitMQ/rabbitMQ.service';
 import { PrismaHealthIndicator } from 'src/Presentation/Health/PrismaHealthIndicator.service';
 import { PaymentsService } from '../Application/services/payments.service';
 import { PaymentsAdapter } from '../Domain/Adapters/payments.adapter';
@@ -12,13 +13,13 @@ import { QRCodeService } from '../Infrastructure/Apis/qrcode.service';
 import { ConfirmPaymentListener } from '../Infrastructure/Events/listeners/confirmPayment.listener';
 import { HealthController } from '../Presentation/Health/health.controller';
 import { PaymentsController } from '../Presentation/Payments/payments.controller';
-import { ConsumerService } from 'src/Infrastructure/RabbitMQ/rabbitMQ.service';
 
 describe('E2E Test Payments', () => {
   let paymentController: PaymentsController;
   let healthController: HealthController;
   let service: PaymentsService;
   let prisma: PrismaService;
+  let consumer: ConsumerService;
   let healthService: PrismaHealthIndicator;
   let app: INestApplication;
 
@@ -55,6 +56,7 @@ describe('E2E Test Payments', () => {
     service = module.get(PaymentsService);
     healthService = module.get(PrismaHealthIndicator);
     prisma = module.get(PrismaService);
+    consumer = module.get(ConsumerService);
     app = module.createNestApplication();
     await app.init();
   });
@@ -65,5 +67,6 @@ describe('E2E Test Payments', () => {
     expect(prisma).toBeDefined();
     expect(healthController).toBeDefined();
     expect(healthService).toBeDefined();
+    expect(consumer).toBeDefined();
   });
 });
