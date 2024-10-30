@@ -10,5 +10,6 @@
   "coverageReporters": ["lcov", "text"],
   "testEnvironment": "node",
   "verbose": true,
-  "setupFilesAfterEnv": ["<rootDir>/singleton.ts"]
+  "setupFilesAfterEnv": ["<rootDir>/singleton.ts"],
+  "detectOpenHandles": true
 }

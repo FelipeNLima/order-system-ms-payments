@@ -120,6 +120,7 @@
         "node_modules/.prisma/client/*.node"
       ]
     },
+    "detectOpenHandles": true,
     "testEnvironment": "node",
     "testTimeout": 90000
   }
