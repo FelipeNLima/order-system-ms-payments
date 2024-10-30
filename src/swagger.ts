@@ -9,7 +9,7 @@ export default async function (app: INestApplication) {
 
   if (env !== 'prd') {
     const documentBuild = new DocumentBuilder()
-      .setTitle('API Payments')
+      .setTitle('API Payment')
       .setDescription('API desenvolvida para o projeto pos-tech.')
       .setVersion('1.0')
       .build();

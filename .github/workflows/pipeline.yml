@@ -11,25 +11,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: "18"
 
       - name: Install dependencies
+        run: yarn
+
+      - name: Set up Docker
         run: |
-          npm install
-      - name: Run tests unit
-        run: |
-          yarn test:unit
-      - name: Run tests e2e
-        run: |
-          yarn test:e2e
-      # - name: Run tests integration
-      #   run: |
-      #     yarn test:integration
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Run test
+        run: yarn test
 
   sonar:
     runs-on: ubuntu-latest
@@ -49,6 +47,7 @@ jobs:
             -Dsonar.language=ts \
             -Dsonar.tests=. \
             -Dsonar.test.inclusions=**/*.spec.ts
+
   deploy:
     runs-on: ubuntu-latest
     needs: [sonar, test]
