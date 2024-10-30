@@ -20,7 +20,8 @@ jobs:
           node-version: "18"
 
       - name: Install dependencies
-        run: yarn
+        run: |
+          npm install
 
       - name: Set up Docker
         run: |
@@ -28,7 +29,8 @@ jobs:
           sudo apt-get install -y docker-compose
 
       - name: Run test
-        run: yarn test
+        run: |
+          yarn test
 
   sonar:
     name: sonarqube
