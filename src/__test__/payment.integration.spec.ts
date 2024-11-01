@@ -73,9 +73,9 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await container.stop();
   await prismaClient.$disconnect();
   client.destroy();
+  await container.stop();
 });
 
 beforeEach(async () => {
@@ -254,7 +254,7 @@ describe('Integration Test Payments', () => {
 });
 
 afterAll(async () => {
-  await container.stop();
   await prismaClient.$disconnect();
   client.destroy();
+  await container.stop();
 });
