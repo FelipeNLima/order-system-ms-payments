@@ -3,7 +3,6 @@ import { INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConsumerService } from 'src/Infrastructure/RabbitMQ/rabbitMQ.service';
 import { PrismaHealthIndicator } from 'src/Presentation/Health/PrismaHealthIndicator.service';
 import { PaymentsService } from '../Application/services/payments.service';
 import { PaymentsAdapter } from '../Domain/Adapters/payments.adapter';
@@ -15,11 +14,10 @@ import { HealthController } from '../Presentation/Health/health.controller';
 import { PaymentsController } from '../Presentation/Payments/payments.controller';
 
 describe('E2E Test Payments', () => {
-  let paymentController: PaymentsController;
+  let controller: PaymentsController;
   let healthController: HealthController;
   let service: PaymentsService;
   let prisma: PrismaService;
-  let consumer: ConsumerService;
   let healthService: PrismaHealthIndicator;
   let app: INestApplication;
 
@@ -43,7 +41,6 @@ describe('E2E Test Payments', () => {
         ConfigService,
         ConfirmPaymentListener,
         EventEmitter2,
-        ConsumerService,
         { provide: PaymentsRepository, useClass: PaymentsAdapter },
       ],
     })
@@ -51,22 +48,20 @@ describe('E2E Test Payments', () => {
       .useValue(mockTodoService)
       .compile();
 
-    paymentController = module.get<PaymentsController>(PaymentsController);
+    controller = module.get<PaymentsController>(PaymentsController);
     healthController = module.get<HealthController>(HealthController);
     service = module.get(PaymentsService);
     healthService = module.get(PrismaHealthIndicator);
     prisma = module.get(PrismaService);
-    consumer = module.get(ConsumerService);
     app = module.createNestApplication();
     await app.init();
   });
 
   it('should be defined', () => {
-    expect(paymentController).toBeDefined();
+    expect(controller).toBeDefined();
     expect(service).toBeDefined();
     expect(prisma).toBeDefined();
     expect(healthController).toBeDefined();
     expect(healthService).toBeDefined();
-    expect(consumer).toBeDefined();
   });
 });
