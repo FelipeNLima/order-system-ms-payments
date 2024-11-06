@@ -74,8 +74,9 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await prismaClient.$disconnect();
-  client.destroy();
   await container.stop();
+  client.destroy();
+  console.log('test db stopped...');
 });
 
 beforeEach(async () => {
@@ -255,6 +256,7 @@ describe('Integration Test Payments', () => {
 
 afterAll(async () => {
   await prismaClient.$disconnect();
-  client.destroy();
   await container.stop();
+  client.destroy();
+  console.log('test db stopped...');
 });

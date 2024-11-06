@@ -30,7 +30,7 @@ jobs:
 
       - name: Run test
         run: |
-          yarn test
+          yarn test:unit && yarn test:e2e
 
   sonar:
     name: sonarqube
@@ -40,10 +40,18 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
       - name: Install dependencies
         run: yarn
+
       - name: Test and coverage
         run: yarn test:cov
+
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@master
         env:

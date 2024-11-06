@@ -13,7 +13,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest -i",
+    "test": "jest -i --config=./test/jest.e2e.json",
     "test:e2e": "jest -i payment.e2e.spec.ts",
     "test:unit": "jest -i payment.unit.spec.ts",
     "test:integration": "jest -i payment.integration.spec.ts",
