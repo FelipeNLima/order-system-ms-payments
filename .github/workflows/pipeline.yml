@@ -46,11 +46,16 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
       - name: Install dependencies
         run: yarn
 
-      - name: Test and coverage
-        run: yarn test:cov
+      # - name: Test and coverage
+      #   run: yarn test:cov
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@master

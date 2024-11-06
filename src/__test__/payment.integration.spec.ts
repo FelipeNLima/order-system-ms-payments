@@ -16,7 +16,6 @@ import { PaymentsRepository } from '../Domain/Repositories/paymentsRepository';
 import { PrismaService } from '../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../Infrastructure/Apis/qrcode.service';
 import { ConfirmPaymentListener } from '../Infrastructure/Events/listeners/confirmPayment.listener';
-import { ConsumerService } from '../Infrastructure/RabbitMQ/rabbitMQ.service';
 import { HealthController } from '../Presentation/Health/health.controller';
 import { PrismaHealthIndicator } from '../Presentation/Health/PrismaHealthIndicator.service';
 import { PaymentsController } from '../Presentation/Payments/payments.controller';
@@ -28,6 +27,7 @@ let urlConnection: string; // a url do banco que sera criada pelo testcontainers
 let client: Connection; // importamos do pacote mysql
 
 beforeAll(async () => {
+  jest.setTimeout(5000);
   container = await new MySqlContainer().start();
   client = createConnection({
     host: container.getHost(),
@@ -63,7 +63,6 @@ beforeAll(async () => {
       ConfigService,
       ConfirmPaymentListener,
       EventEmitter2,
-      ConsumerService,
       { provide: PaymentsRepository, useClass: PaymentsAdapter },
     ],
   }).compile();
@@ -74,8 +73,8 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await prismaClient.$disconnect();
-  await container.stop();
   client.destroy();
+  await container.stop();
   console.log('test db stopped...');
 });
 
