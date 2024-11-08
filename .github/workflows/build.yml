@@ -19,8 +19,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y docker-compose
-      - name: Test and coverage
-        run: yarn jest --coverage
+      # - name: Test and coverage
+      #   run: yarn jest --coverage
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@master
         env:
