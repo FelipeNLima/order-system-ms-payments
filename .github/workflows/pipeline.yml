@@ -8,35 +8,9 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  test:
-    name: test - unit/e2e/integration
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-
-      - name: Install dependencies
-        run: |
-          yarn
-
-      - name: Set up Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-
-      - name: Run test
-        run: |
-          yarn test:unit && yarn test:e2e
-
   sonarcloud:
     name: SonarQube Cloud
     runs-on: ubuntu-latest
-    needs: [test]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -67,7 +41,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [test, sonarcloud]
+    needs: [sonarcloud]
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4

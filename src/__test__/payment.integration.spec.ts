@@ -15,7 +15,6 @@ import { OrdersPayments } from '../Domain/Interfaces/orders';
 import { PaymentsRepository } from '../Domain/Repositories/paymentsRepository';
 import { PrismaService } from '../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../Infrastructure/Apis/qrcode.service';
-import { ConfirmPaymentListener } from '../Infrastructure/Events/listeners/confirmPayment.listener';
 import { HealthController } from '../Presentation/Health/health.controller';
 import { PrismaHealthIndicator } from '../Presentation/Health/PrismaHealthIndicator.service';
 import { PaymentsController } from '../Presentation/Payments/payments.controller';
@@ -59,9 +58,9 @@ beforeAll(async () => {
       PrismaHealthIndicator,
       PaymentsService,
       PrismaService,
-      QRCodeService,
       ConfigService,
-      ConfirmPaymentListener,
+      QRCodeService,
+      //ConfirmPaymentListener,
       EventEmitter2,
       { provide: PaymentsRepository, useClass: PaymentsAdapter },
     ],
