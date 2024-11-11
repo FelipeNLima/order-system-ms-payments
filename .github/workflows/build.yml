@@ -1,28 +1,31 @@
-name: Build
+name: SonarQube Analysis
 
 on:
   push:
-    branches:
-      - main
+    branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
-  sonarqube:
-    name: sonarqube
+  sonarcloud:
+    name: SonarQube Analysis
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          fetch-depth: 0
-      - name: Install dependencies
-        run: yarn
-      - name: Set up Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-      # - name: Test and coverage
-      #   run: yarn jest --coverage
+          node-version: "18"
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-
+      - name: Install Dependencies
+        run: npm ci
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@master
+        uses: SonarSource/sonar-scanner-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
