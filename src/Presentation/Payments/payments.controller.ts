@@ -52,6 +52,10 @@ export class PaymentsController {
   }
 
   @Post()
+  @ApiHeader({
+    name: 'user',
+    description: 'ID do usuário ADMIN',
+  })
   @Roles(['admin'])
   async postPayments(@Body() dto: OrdersPaymentDto) {
     try {
