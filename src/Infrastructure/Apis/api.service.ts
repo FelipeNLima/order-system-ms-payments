@@ -11,9 +11,13 @@ export abstract class BaseHttpRequestService {
     protected httpService: HttpService,
   ) {}
 
-  private readonly USERID = this.configService.get<string>('USERID');
-  private readonly POSID = this.configService.get<string>('POSID');
-  private readonly TOKEN = this.configService.get<string>('TOKEN_MERCADO_PAGO');
+  private readonly USERID =
+    this.configService.get<string>('USERID') || '156066762';
+  private readonly POSID =
+    this.configService.get<string>('POSID') || 'SUC001POS001';
+  private readonly TOKEN =
+    this.configService.get<string>('TOKEN_MERCADO_PAGO') ||
+    'TEST-5034444343472741-050912-53995814c25f2defa35c9887817f419a-156066762';
 
   async request(options?: AxiosRequestConfig) {
     const headers = {

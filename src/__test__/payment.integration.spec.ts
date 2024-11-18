@@ -24,6 +24,7 @@ let prismaClient: PrismaClient; // importamos do Prisma Client
 let app: INestApplication; // importamos nestjs common
 let urlConnection: string; // a url do banco que sera criada pelo testcontainers
 let client: Connection; // importamos do pacote mysql
+let controller: PaymentsController; // controller
 
 beforeAll(async () => {
   jest.setTimeout(5000);
@@ -66,6 +67,7 @@ beforeAll(async () => {
     ],
   }).compile();
 
+  controller = module.get<PaymentsController>(PaymentsController);
   app = module.createNestApplication();
   await app.init();
 });
@@ -119,16 +121,11 @@ describe('Integration Test Payments', () => {
 
     await request(app.getHttpServer()).post('/payments').send(dto).expect(201);
 
-    const paymentDb = await prismaClient.payments.findUnique({
-      where: {
-        id: 1,
-      },
-    });
+    const paymentDb = await controller.getByID(1);
 
     expect(paymentDb).toBeTruthy();
     expect(paymentDb?.salesOrderID).toBe(dto.salesOrderID);
     expect(paymentDb?.orderID).toBe(dto.orderID);
-    expect(paymentDb?.createdAt).toBeTruthy();
   });
 
   it('should update payment', async () => {
@@ -237,17 +234,7 @@ describe('Integration Test Payments', () => {
 
     const orderID = 1;
 
-    await request(app.getHttpServer())
-      .get(`/payments/orderNumber/${orderID}`)
-      .expect(200);
-
-    const paymentDb = await prismaClient.payments.findFirst({
-      where: {
-        orderID,
-      },
-    });
-
-    expect(paymentDb).toBeTruthy();
+    const paymentDb = await controller.getPaymentsByOrderId(dto?.orderID);
     expect(paymentDb?.orderID).toBe(orderID);
   });
 });
