@@ -4,6 +4,7 @@
 
 GET http://localhost:3000/payments/1
 Content-Type: application/json
+user: 1
 
 # POST
 # Criar pedido
@@ -11,9 +12,22 @@ Content-Type: application/json
 
 POST http://localhost:3000/payments
 Content-Type: application/json
+user: 1
 
-{   "id": "123",
-    "salesOrderID": "123554",
-    "qrCode": "qrCode"
-    "status": true
+{
+    "salesOrderID": "5ace7194-247b-4c4a-a7a5-1018cd092bb0",
+    "customerID": "1",
+    "orderID": 1,
+    "amount": 10,
+    "items": [
+        {
+            "sku_number": "5",
+            "category": "marketplace",
+            "title": "x-burger",
+            "unit_price": 10,
+            "quantity": 1,
+            "unit_measure": "unit",
+            "total_amount": 10
+        }
+    ]
 }
