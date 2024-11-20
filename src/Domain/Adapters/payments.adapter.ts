@@ -76,6 +76,14 @@ export class PaymentsAdapter implements PaymentsRepository {
           orderID: order?.orderID,
         };
 
+        const verifyIfExist = await this.prisma.payments.findUnique({
+          where: { salesOrderID: payments?.salesOrderID },
+        });
+
+        if (verifyIfExist) {
+          throw new BadRequestException('Ordem de Pagamento já existe');
+        }
+
         const response = await this.prisma.payments.create({
           data: { ...payments },
         });

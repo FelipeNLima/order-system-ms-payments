@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { OrdersPayments } from '../../Domain/Interfaces/orders';
 import { Payments } from '../../Domain/Interfaces/payments';
 import { PaymentsRepository } from '../../Domain/Repositories/paymentsRepository';
-import { OrdersPayments } from 'src/Domain/Interfaces/orders';
 
 @Injectable()
 export class PaymentsService {
