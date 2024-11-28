@@ -22,5 +22,6 @@ model Payments {
   inStoreOrderID String
   qrCode         String   @unique
   orderID        Int      @unique
+  amount         Float
   status         String   @default("PENDING")
 }

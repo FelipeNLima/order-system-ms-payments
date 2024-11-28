@@ -4,5 +4,6 @@ export interface Payments {
   qrCode: string;
   id: number;
   orderID: number;
+  amount: number;
   status: string;
 }

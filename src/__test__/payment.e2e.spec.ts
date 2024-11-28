@@ -9,6 +9,7 @@ import { PaymentsAdapter } from '../Domain/Adapters/payments.adapter';
 import { PaymentsRepository } from '../Domain/Repositories/paymentsRepository';
 import { PrismaService } from '../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../Infrastructure/Apis/qrcode.service';
+import { AwsSqsService } from '../Infrastructure/Apis/sqs.service';
 import { ConfirmPaymentListener } from '../Infrastructure/Events/listeners/confirmPayment.listener';
 import { HealthController } from '../Presentation/Health/health.controller';
 import { PaymentsController } from '../Presentation/Payments/payments.controller';
@@ -39,6 +40,7 @@ describe('E2E Test Payments', () => {
         PrismaService,
         QRCodeService,
         ConfigService,
+        AwsSqsService,
         ConfirmPaymentListener,
         EventEmitter2,
         { provide: PaymentsRepository, useClass: PaymentsAdapter },

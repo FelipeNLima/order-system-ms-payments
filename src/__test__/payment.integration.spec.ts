@@ -15,6 +15,7 @@ import { OrdersPayments } from '../Domain/Interfaces/orders';
 import { PaymentsRepository } from '../Domain/Repositories/paymentsRepository';
 import { PrismaService } from '../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../Infrastructure/Apis/qrcode.service';
+import { AwsSqsService } from '../Infrastructure/Apis/sqs.service';
 import { HealthController } from '../Presentation/Health/health.controller';
 import { PrismaHealthIndicator } from '../Presentation/Health/PrismaHealthIndicator.service';
 import { PaymentsController } from '../Presentation/Payments/payments.controller';
@@ -61,7 +62,7 @@ beforeAll(async () => {
       PrismaService,
       ConfigService,
       QRCodeService,
-      //ConfirmPaymentListener,
+      AwsSqsService,
       EventEmitter2,
       { provide: PaymentsRepository, useClass: PaymentsAdapter },
     ],
@@ -158,6 +159,7 @@ describe('Integration Test Payments', () => {
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
       orderID: 1,
+      amount: 10,
       status: 'PAID',
     };
 

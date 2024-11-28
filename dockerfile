@@ -1,4 +1,4 @@
-FROM node:20 as builder
+FROM node:18 as builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ COPY . .
 RUN yarn
 RUN yarn build
 
-FROM node:20 as runner 
+FROM node:18 as runner 
 
 WORKDIR /app 
 

@@ -23,6 +23,10 @@ export class PaymentsDto {
   orderID: number;
 
   @ApiProperty()
+  @IsNumber()
+  amount: number;
+
+  @ApiProperty()
   @IsString()
   status: string;
 }

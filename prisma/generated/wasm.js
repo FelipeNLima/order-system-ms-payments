@@ -130,6 +130,7 @@ exports.Prisma.PaymentsScalarFieldEnum = {
   inStoreOrderID: 'inStoreOrderID',
   qrCode: 'qrCode',
   orderID: 'orderID',
+  amount: 'amount',
   status: 'status'
 };
 

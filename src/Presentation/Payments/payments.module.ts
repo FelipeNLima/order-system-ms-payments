@@ -7,6 +7,7 @@ import { PaymentsRepository } from '../../Domain/Repositories/paymentsRepository
 import { ConsumerService } from '../../Infrastructure/Apis/consumer.service';
 import { PrismaService } from '../../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../../Infrastructure/Apis/qrcode.service';
+import { AwsSqsService } from '../../Infrastructure/Apis/sqs.service';
 import { ConfirmPaymentListener } from '../../Infrastructure/Events/listeners/confirmPayment.listener';
 import { PaymentsController } from './payments.controller';
 
@@ -19,6 +20,7 @@ import { PaymentsController } from './payments.controller';
     PrismaService,
     QRCodeService,
     ConsumerService,
+    AwsSqsService,
     ConfirmPaymentListener,
   ],
 })

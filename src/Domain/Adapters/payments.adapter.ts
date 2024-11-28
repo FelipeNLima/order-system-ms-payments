@@ -1,7 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { PrismaService } from '../../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../../Infrastructure/Apis/qrcode.service';
+import { AwsSqsService } from '../../Infrastructure/Apis/sqs.service';
 import { ConfirmPaymentEvent } from '../../Infrastructure/Events/confirmPaymentEvent';
 import { PaymentEvents } from '../Enums/paymentStatus';
 import { OrdersPayments } from '../Interfaces/orders';
@@ -14,6 +16,8 @@ export class PaymentsAdapter implements PaymentsRepository {
     private readonly prisma: PrismaService,
     private readonly qrCode: QRCodeService,
     private readonly eventEmitter: EventEmitter2,
+    private readonly sqsService: AwsSqsService,
+    private readonly config: ConfigService,
   ) {}
 
   async getPaymentsById(id: number): Promise<Payments | null> {
@@ -38,7 +42,7 @@ export class PaymentsAdapter implements PaymentsRepository {
 
   async updatePayment(payments: Payments): Promise<Payments> {
     try {
-      return await this.prisma.payments.update({
+      const response = await this.prisma.payments.update({
         where: {
           id: payments.id,
         },
@@ -46,6 +50,19 @@ export class PaymentsAdapter implements PaymentsRepository {
           ...payments,
         },
       });
+
+      const returnOrder = {
+        salesOrderID: response?.salesOrderID,
+        orderID: response?.orderID,
+        amount: response?.amount,
+        payments: response?.status,
+      };
+
+      // RETURN FOR QUEUE ORDER
+      const queue = this.config.get<string>('QUEUE_RETURN_ORDER');
+      await this.sqsService.sendMessage(returnOrder, queue);
+
+      return response;
     } catch (error) {
       const message = error?.meta?.target || error?.meta?.details;
       throw new BadRequestException(message);
@@ -74,6 +91,7 @@ export class PaymentsAdapter implements PaymentsRepository {
           qrCode: data?.qr_data,
           inStoreOrderID: data?.in_store_order_id,
           orderID: order?.orderID,
+          amount: order?.amount,
         };
 
         const verifyIfExist = await this.prisma.payments.findUnique({

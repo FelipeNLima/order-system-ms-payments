@@ -5,6 +5,7 @@ export class ConfirmPaymentEvent {
     qrCode: string;
     id: number;
     orderID: number;
+    amount: number;
     status: string;
   };
 
@@ -17,6 +18,7 @@ export class ConfirmPaymentEvent {
       qrCode: string;
       id: number;
       orderID: number;
+      amount: number;
       status: string;
     };
   }) {

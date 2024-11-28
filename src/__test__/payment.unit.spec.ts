@@ -21,9 +21,9 @@ describe('Unit Test Payments', () => {
           category: 'marketplace',
           title: 'x-burger',
           unit_price: 5,
-          quantity: 1,
+          quantity: 2,
           unit_measure: 'unit',
-          total_amount: 1 * 5,
+          total_amount: 2 * 5,
         },
       ],
     };
@@ -37,6 +37,7 @@ describe('Unit Test Payments', () => {
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
       orderID: 1,
+      amount: 10,
       status: 'PENDING',
     };
 
@@ -51,6 +52,7 @@ describe('Unit Test Payments', () => {
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
       orderID: 1,
+      amount: 10,
       status: 'PENDING',
     });
   });
@@ -65,6 +67,7 @@ describe('Unit Test Payments', () => {
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
       orderID: 1,
+      amount: 10,
       status: 'PAID',
     };
 
@@ -79,6 +82,7 @@ describe('Unit Test Payments', () => {
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
       salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
+      amount: 10,
       status: 'PAID',
     });
   });

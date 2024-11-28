@@ -5,4 +5,14 @@ metadata:
   labels:
     name: api-configmap
 data:
-  DATABASE_URL: "mysql://admin:Fiap2024@db.ctgyg2ums20j.us-east-1.rds.amazonaws.com:3306/dbMySqlPayments"
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  TOKEN_MERCADO_PAGO: ${{ secrets.TOKEN_MERCADO_PAGO }}
+  USERID: ${{ secrets.USERID }}
+  POSID: ${{ secrets.POSID }}
+  NODE_LOCAL_PORT: ${{ secrets.NODE_LOCAL_PORT }}
+  ENDPOINT: ${{ secrets.ENDPOINT }}
+  QUEUE: ${{ secrets.QUEUE }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}

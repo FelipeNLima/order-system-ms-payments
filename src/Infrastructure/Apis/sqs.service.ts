@@ -11,7 +11,7 @@ export class AwsSqsService {
 
   private readonly logger = new Logger(AwsSqsService.name);
 
-  async sendMessage(message: any, queueUrl: string) {
+  async sendMessage(message: any, queueUrl?: string) {
     const params = {
       DelaySeconds: 10,
       MessageBody: JSON.stringify(message),

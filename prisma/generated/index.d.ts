@@ -854,11 +854,13 @@ export namespace Prisma {
   export type PaymentsAvgAggregateOutputType = {
     id: number | null
     orderID: number | null
+    amount: number | null
   }
 
   export type PaymentsSumAggregateOutputType = {
     id: number | null
     orderID: number | null
+    amount: number | null
   }
 
   export type PaymentsMinAggregateOutputType = {
@@ -869,6 +871,7 @@ export namespace Prisma {
     inStoreOrderID: string | null
     qrCode: string | null
     orderID: number | null
+    amount: number | null
     status: string | null
   }
 
@@ -880,6 +883,7 @@ export namespace Prisma {
     inStoreOrderID: string | null
     qrCode: string | null
     orderID: number | null
+    amount: number | null
     status: string | null
   }
 
@@ -891,6 +895,7 @@ export namespace Prisma {
     inStoreOrderID: number
     qrCode: number
     orderID: number
+    amount: number
     status: number
     _all: number
   }
@@ -899,11 +904,13 @@ export namespace Prisma {
   export type PaymentsAvgAggregateInputType = {
     id?: true
     orderID?: true
+    amount?: true
   }
 
   export type PaymentsSumAggregateInputType = {
     id?: true
     orderID?: true
+    amount?: true
   }
 
   export type PaymentsMinAggregateInputType = {
@@ -914,6 +921,7 @@ export namespace Prisma {
     inStoreOrderID?: true
     qrCode?: true
     orderID?: true
+    amount?: true
     status?: true
   }
 
@@ -925,6 +933,7 @@ export namespace Prisma {
     inStoreOrderID?: true
     qrCode?: true
     orderID?: true
+    amount?: true
     status?: true
   }
 
@@ -936,6 +945,7 @@ export namespace Prisma {
     inStoreOrderID?: true
     qrCode?: true
     orderID?: true
+    amount?: true
     status?: true
     _all?: true
   }
@@ -1034,6 +1044,7 @@ export namespace Prisma {
     inStoreOrderID: string
     qrCode: string
     orderID: number
+    amount: number
     status: string
     _count: PaymentsCountAggregateOutputType | null
     _avg: PaymentsAvgAggregateOutputType | null
@@ -1064,6 +1075,7 @@ export namespace Prisma {
     inStoreOrderID?: boolean
     qrCode?: boolean
     orderID?: boolean
+    amount?: boolean
     status?: boolean
   }, ExtArgs["result"]["payments"]>
 
@@ -1076,6 +1088,7 @@ export namespace Prisma {
     inStoreOrderID?: boolean
     qrCode?: boolean
     orderID?: boolean
+    amount?: boolean
     status?: boolean
   }
 
@@ -1091,6 +1104,7 @@ export namespace Prisma {
       inStoreOrderID: string
       qrCode: string
       orderID: number
+      amount: number
       status: string
     }, ExtArgs["result"]["payments"]>
     composites: {}
@@ -1468,6 +1482,7 @@ export namespace Prisma {
     readonly inStoreOrderID: FieldRef<"Payments", 'String'>
     readonly qrCode: FieldRef<"Payments", 'String'>
     readonly orderID: FieldRef<"Payments", 'Int'>
+    readonly amount: FieldRef<"Payments", 'Float'>
     readonly status: FieldRef<"Payments", 'String'>
   }
     
@@ -1764,6 +1779,7 @@ export namespace Prisma {
     inStoreOrderID: 'inStoreOrderID',
     qrCode: 'qrCode',
     orderID: 'orderID',
+    amount: 'amount',
     status: 'status'
   };
 
@@ -1825,6 +1841,7 @@ export namespace Prisma {
     inStoreOrderID?: StringFilter<"Payments"> | string
     qrCode?: StringFilter<"Payments"> | string
     orderID?: IntFilter<"Payments"> | number
+    amount?: FloatFilter<"Payments"> | number
     status?: StringFilter<"Payments"> | string
   }
 
@@ -1836,6 +1853,7 @@ export namespace Prisma {
     inStoreOrderID?: SortOrder
     qrCode?: SortOrder
     orderID?: SortOrder
+    amount?: SortOrder
     status?: SortOrder
   }
 
@@ -1850,6 +1868,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Payments"> | Date | string
     updatedAt?: DateTimeFilter<"Payments"> | Date | string
     inStoreOrderID?: StringFilter<"Payments"> | string
+    amount?: FloatFilter<"Payments"> | number
     status?: StringFilter<"Payments"> | string
   }, "id" | "salesOrderID" | "qrCode" | "orderID">
 
@@ -1861,6 +1880,7 @@ export namespace Prisma {
     inStoreOrderID?: SortOrder
     qrCode?: SortOrder
     orderID?: SortOrder
+    amount?: SortOrder
     status?: SortOrder
     _count?: PaymentsCountOrderByAggregateInput
     _avg?: PaymentsAvgOrderByAggregateInput
@@ -1880,6 +1900,7 @@ export namespace Prisma {
     inStoreOrderID?: StringWithAggregatesFilter<"Payments"> | string
     qrCode?: StringWithAggregatesFilter<"Payments"> | string
     orderID?: IntWithAggregatesFilter<"Payments"> | number
+    amount?: FloatWithAggregatesFilter<"Payments"> | number
     status?: StringWithAggregatesFilter<"Payments"> | string
   }
 
@@ -1890,6 +1911,7 @@ export namespace Prisma {
     inStoreOrderID: string
     qrCode: string
     orderID: number
+    amount: number
     status?: string
   }
 
@@ -1901,6 +1923,7 @@ export namespace Prisma {
     inStoreOrderID: string
     qrCode: string
     orderID: number
+    amount: number
     status?: string
   }
 
@@ -1911,6 +1934,7 @@ export namespace Prisma {
     inStoreOrderID?: StringFieldUpdateOperationsInput | string
     qrCode?: StringFieldUpdateOperationsInput | string
     orderID?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
   }
 
@@ -1922,6 +1946,7 @@ export namespace Prisma {
     inStoreOrderID?: StringFieldUpdateOperationsInput | string
     qrCode?: StringFieldUpdateOperationsInput | string
     orderID?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
   }
 
@@ -1933,6 +1958,7 @@ export namespace Prisma {
     inStoreOrderID: string
     qrCode: string
     orderID: number
+    amount: number
     status?: string
   }
 
@@ -1943,6 +1969,7 @@ export namespace Prisma {
     inStoreOrderID?: StringFieldUpdateOperationsInput | string
     qrCode?: StringFieldUpdateOperationsInput | string
     orderID?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
   }
 
@@ -1954,6 +1981,7 @@ export namespace Prisma {
     inStoreOrderID?: StringFieldUpdateOperationsInput | string
     qrCode?: StringFieldUpdateOperationsInput | string
     orderID?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
   }
 
@@ -1993,6 +2021,17 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type PaymentsCountOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
@@ -2001,12 +2040,14 @@ export namespace Prisma {
     inStoreOrderID?: SortOrder
     qrCode?: SortOrder
     orderID?: SortOrder
+    amount?: SortOrder
     status?: SortOrder
   }
 
   export type PaymentsAvgOrderByAggregateInput = {
     id?: SortOrder
     orderID?: SortOrder
+    amount?: SortOrder
   }
 
   export type PaymentsMaxOrderByAggregateInput = {
@@ -2017,6 +2058,7 @@ export namespace Prisma {
     inStoreOrderID?: SortOrder
     qrCode?: SortOrder
     orderID?: SortOrder
+    amount?: SortOrder
     status?: SortOrder
   }
 
@@ -2028,12 +2070,14 @@ export namespace Prisma {
     inStoreOrderID?: SortOrder
     qrCode?: SortOrder
     orderID?: SortOrder
+    amount?: SortOrder
     status?: SortOrder
   }
 
   export type PaymentsSumOrderByAggregateInput = {
     id?: SortOrder
     orderID?: SortOrder
+    amount?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -2083,6 +2127,22 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -2092,6 +2152,14 @@ export namespace Prisma {
   }
 
   export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
@@ -2135,6 +2203,17 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -2149,17 +2228,6 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -2191,6 +2259,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
 
