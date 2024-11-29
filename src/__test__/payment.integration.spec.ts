@@ -11,11 +11,13 @@ import { Connection, createConnection } from 'mysql2';
 import * as request from 'supertest';
 import { PaymentsService } from '../Application/services/payments.service';
 import { PaymentsAdapter } from '../Domain/Adapters/payments.adapter';
+import { PaymentEvents } from '../Domain/Enums/paymentStatus';
 import { OrdersPayments } from '../Domain/Interfaces/orders';
 import { PaymentsRepository } from '../Domain/Repositories/paymentsRepository';
 import { PrismaService } from '../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../Infrastructure/Apis/qrcode.service';
 import { AwsSqsService } from '../Infrastructure/Apis/sqs.service';
+import { ConfirmPaymentEvent } from '../Infrastructure/Events/confirmPaymentEvent';
 import { HealthController } from '../Presentation/Health/health.controller';
 import { PrismaHealthIndicator } from '../Presentation/Health/PrismaHealthIndicator.service';
 import { PaymentsController } from '../Presentation/Payments/payments.controller';
@@ -26,6 +28,7 @@ let app: INestApplication; // importamos nestjs common
 let urlConnection: string; // a url do banco que sera criada pelo testcontainers
 let client: Connection; // importamos do pacote mysql
 let controller: PaymentsController; // controller
+let eventEmitter: EventEmitter2; // controller
 
 beforeAll(async () => {
   jest.setTimeout(5000);
@@ -68,6 +71,7 @@ beforeAll(async () => {
     ],
   }).compile();
 
+  eventEmitter = module.get<EventEmitter2>(EventEmitter2);
   controller = module.get<PaymentsController>(PaymentsController);
   app = module.createNestApplication();
   await app.init();
@@ -238,6 +242,37 @@ describe('Integration Test Payments', () => {
 
     const paymentDb = await controller.getPaymentsByOrderId(dto?.orderID);
     expect(paymentDb?.orderID).toBe(orderID);
+  });
+
+  it('should event Payments', async () => {
+    const dto: OrdersPayments = {
+      salesOrderID: randomUUID(),
+      customerID: '1',
+      orderID: 1,
+      amount: 10,
+      items: [
+        {
+          sku_number: '100000',
+          category: 'marketplace',
+          title: 'x-burger',
+          unit_price: 5,
+          quantity: 2,
+          unit_measure: 'unit',
+          total_amount: 10,
+        },
+      ],
+    };
+
+    const response = await request(app.getHttpServer())
+      .post('/payments')
+      .send(dto)
+      .expect(201);
+
+    const payload = new ConfirmPaymentEvent({
+      payload: response.body,
+    });
+
+    eventEmitter.emit(PaymentEvents.CONFIRM_PAYMENT, payload);
   });
 });
 

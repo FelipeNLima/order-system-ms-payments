@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { prismaMock } from '../../test/singleton';
+import { prismaMock } from './singleton';
 import { OrdersPayments } from '../Domain/Interfaces/orders';
 import {
   createPayment,
@@ -100,17 +100,19 @@ describe('Unit Test Payments', () => {
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
       salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
       status: 'PAID',
+      amount: 10,
     });
 
     await expect(getPaymentsById(id)).resolves.toEqual({
       id: 1,
       createdAt: new Date('2024-10-17T22:38:38.430Z'),
       updatedAt: new Date('2024-10-17T22:38:38.430Z'),
+      salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
       inStoreOrderID: '6b800cf5-e752-4de0-b092-89378a84c6a5',
-      orderID: 1,
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
-      salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
+      orderID: 1,
+      amount: 10,
       status: 'PAID',
     });
   });
@@ -122,11 +124,12 @@ describe('Unit Test Payments', () => {
       id: 1,
       createdAt: new Date('2024-10-17T22:38:38.430Z'),
       updatedAt: new Date('2024-10-17T22:38:38.430Z'),
+      salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
       inStoreOrderID: '6b800cf5-e752-4de0-b092-89378a84c6a5',
-      orderID: 1,
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
-      salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
+      orderID: 1,
+      amount: 10,
       status: 'PAID',
     });
 
@@ -134,11 +137,12 @@ describe('Unit Test Payments', () => {
       id: 1,
       createdAt: new Date('2024-10-17T22:38:38.430Z'),
       updatedAt: new Date('2024-10-17T22:38:38.430Z'),
+      salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
       inStoreOrderID: '6b800cf5-e752-4de0-b092-89378a84c6a5',
-      orderID: 1,
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
-      salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
+      orderID: 1,
+      amount: 10,
       status: 'PAID',
     });
   });

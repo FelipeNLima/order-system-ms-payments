@@ -1,6 +1,6 @@
-import prisma from '../../../test/client';
 import { OrdersPayments } from '../../Domain/Interfaces/orders';
 import { Payments } from '../../Domain/Interfaces/payments';
+import prisma from '../client';
 
 export async function getPaymentsById(id: number): Promise<Payments | null> {
   try {

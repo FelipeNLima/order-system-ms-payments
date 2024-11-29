@@ -59,7 +59,7 @@ export class PaymentsAdapter implements PaymentsRepository {
       };
 
       // RETURN FOR QUEUE ORDER
-      const queue = this.config.get<string>('QUEUE_RETURN_ORDER');
+      const queue = this.config.get<string>('QUEUE_SEND_ORDER');
       await this.sqsService.sendMessage(returnOrder, queue);
 
       return response;
@@ -73,9 +73,9 @@ export class PaymentsAdapter implements PaymentsRepository {
     try {
       const body = {
         description: `QRCODE-${order.customerID}-${new Date()}`,
-        external_reference: order?.salesOrderID,
+        external_reference: String(order?.salesOrderID),
         title: 'Teste',
-        total_amount: order?.amount,
+        total_amount: Number(order?.amount),
         cash_out: {
           amount: 0,
         },
@@ -87,15 +87,15 @@ export class PaymentsAdapter implements PaymentsRepository {
 
       if (data) {
         const payments = {
-          salesOrderID: order?.salesOrderID,
-          qrCode: data?.qr_data,
-          inStoreOrderID: data?.in_store_order_id,
-          orderID: order?.orderID,
-          amount: order?.amount,
+          salesOrderID: String(order?.salesOrderID),
+          qrCode: String(data?.qr_data),
+          inStoreOrderID: String(data?.in_store_order_id),
+          orderID: Number(order?.orderID),
+          amount: Number(order?.amount),
         };
 
         const verifyIfExist = await this.prisma.payments.findUnique({
-          where: { salesOrderID: payments?.salesOrderID },
+          where: { salesOrderID: String(payments?.salesOrderID) },
         });
 
         if (verifyIfExist) {

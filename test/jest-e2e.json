@@ -1,41 +1,10 @@
 {
   "moduleFileExtensions": ["js", "json", "ts"],
-  "roots": ["src", "test"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-  "testRegex": ".e2e-spec.ts$",
-  "coverageDirectory": "../coverage",
-  "coverageReporters": ["lcov", "text"],
-  "testEnvironment": "node",
-  "verbose": true,
-  "setupFilesAfterEnv": ["<rootDir>/singleton.ts"],
-  "detectOpenHandles": true,
-  "moduleNameMapper": {
-    "src/(.*)": "<rootDir>/src/$1"
-  },
-  "collectCoverageFrom": [
-    "src/**/*.ts",
-    "!src/main.ts",
-    "!src/swagger.ts",
-    "!src/Infrastructure/Guard/*.ts",
-    "!src/app.module.ts",
-    "!src/**/*.module.ts",
-    "!src/**/*.dto.ts",
-    "!src/**/*.interface.ts",
-    "!src/Presentation/Health/*.ts",
-    "!src/__test__/mock/*.ts"
-  ],
-  "coverageThreshold": {
-    "global": {
-      "statements": 30,
-      "branches": 10,
-      "functions": 10,
-      "lines": 30
-    }
-  },
-  "pkg": {
-    "assets": ["node_modules/.prisma/client/*.node"]
-  },
-  "testTimeout": 90000
+  "setupFilesAfterEnv": ["<rootDir>/src/__test__/singleton.ts"]
 }

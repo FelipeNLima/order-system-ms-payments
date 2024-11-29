@@ -1,7 +1,7 @@
 version: '4.34.3'
 
 services:
-  mysqldb:
+  mysqldbPayments:
     image: mysql:latest
     container_name: dbMySql-payments
     restart: always
@@ -20,7 +20,7 @@ services:
 
   api:
     depends_on:
-      - mysqldb
+      - mysqldbPayments
     container_name: nestjs
     image: nestjs-payments
     restart: always
@@ -35,6 +35,14 @@ services:
       - TOKEN_MERCADO_PAGO=$TOKEN_MERCADO_PAGO
       - USERID=$USERID
       - POSID=$POSID
+      - ENDPOINT=$ENDPOINT
+      - QUEUE_RECEIVE_ORDER=$QUEUE_RECEIVE_ORDER
+      - QUEUE_SEND_ORDER=$QUEUE_SEND_ORDER
+      - AWS_REGION=$AWS_REGION
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN
+
     stdin_open: true
     tty: true
     volumes:

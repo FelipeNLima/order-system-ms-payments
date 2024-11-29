@@ -15,7 +15,9 @@ import { PaymentsService } from '../../Application/services/payments.service';
 export class ConsumerService implements OnModuleInit, OnModuleDestroy {
   private consumer: Consumer;
   private readonly logger = new Logger(ConsumerService.name);
-  private readonly QUEUE = this.configService.get<string>('QUEUE');
+  private readonly QUEUE = this.configService.get<string>(
+    'QUEUE_RECEIVE_ORDER',
+  );
   private readonly ENDPOINT = this.configService.get<string>('ENDPOINT');
 
   constructor(

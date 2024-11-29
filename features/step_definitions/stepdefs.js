@@ -1,6 +1,6 @@
-import { Given, Then, When } from '@cucumber/cucumber';
-import { deepStrictEqual } from 'assert';
-import { randomUUID } from 'crypto';
+const { Given, When, Then } = require('@cucumber/cucumber')
+const { deepStrictEqual } = require('assert');
+const { randomUUID } = require('crypto');
 
 const answerPayment = {
   id: 1,

@@ -7,6 +7,7 @@ import { PrismaHealthIndicator } from 'src/Presentation/Health/PrismaHealthIndic
 import { PaymentsService } from '../Application/services/payments.service';
 import { PaymentsAdapter } from '../Domain/Adapters/payments.adapter';
 import { PaymentsRepository } from '../Domain/Repositories/paymentsRepository';
+import { ConsumerService } from '../Infrastructure/Apis/consumer.service';
 import { PrismaService } from '../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../Infrastructure/Apis/qrcode.service';
 import { AwsSqsService } from '../Infrastructure/Apis/sqs.service';
@@ -18,8 +19,8 @@ describe('E2E Test Payments', () => {
   let controller: PaymentsController;
   let healthController: HealthController;
   let service: PaymentsService;
-  let prisma: PrismaService;
   let healthService: PrismaHealthIndicator;
+  let prisma: PrismaService;
   let app: INestApplication;
 
   const mockTodoService = {
@@ -40,6 +41,7 @@ describe('E2E Test Payments', () => {
         PrismaService,
         QRCodeService,
         ConfigService,
+        ConsumerService,
         AwsSqsService,
         ConfirmPaymentListener,
         EventEmitter2,

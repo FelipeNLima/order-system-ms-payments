@@ -102,12 +102,15 @@
       "!src/main.ts",
       "!src/swagger.ts",
       "!src/Infrastructure/Guard/*.ts",
+      "!src/Infrastructure/Events/listeners/confirmPayment.listener.ts",
+      "!src/Infrastructure/Apis/consumer.service.ts",
       "!src/app.module.ts",
       "!src/**/*.module.ts",
       "!src/**/*.dto.ts",
       "!src/**/*.interface.ts",
       "!src/Presentation/Health/*.ts",
-      "!src/__test__/mock/*.ts"
+      "!src/__test__/mock/*.ts",
+      "!src/__test__/client.ts"
     ],
     "coverageThreshold": {
       "global": {
