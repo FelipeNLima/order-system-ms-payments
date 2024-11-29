@@ -97,6 +97,9 @@
     "moduleNameMapper": {
       "src/(.*)": "<rootDir>/src/$1"
     },
+    "setupFiles": [
+      "dotenv/config"
+    ],
     "collectCoverageFrom": [
       "src/**/*.ts",
       "!src/main.ts",
