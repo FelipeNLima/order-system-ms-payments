@@ -1,73 +1,106 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Projeto desenvolvido como trabalho final do curso Software Architecture da Pós-Tech Fiap 2024.
 
-## Installation
+## Sistema de autoatendimento de fast food
 
-```bash
-$ npm install
+Requisitos para o desenvolvimento do projeto
+
+**Pedido**
+
+Os clientes são apresentados a uma interface de seleção na qual podem optar por se identificarem via CPF, se cadastrarem com nome, e-mail ou não se identificar, podendo montar o combo na seguinte sequência, sendo todas elas opcionais: Lanche Acompanhamento Bebida Sobremesa Em cada etapa é exibido o nome, descrição e preço de cada produto.
+
+**Pagamento**
+
+O sistema deverá possuir uma opção de pagamento integrada para MVP. A forma de pagamento oferecida será via QRCode do Mercado Pago.
+
+**Acompanhamento**
+
+Uma vez que o pedido é confirmado e pago, ele é enviado para a cozinha para ser preparado. Simultaneamente deve aparecer em um monitor para o cliente acompanhar o progresso do seu pedido com as seguintes etapas: Recebido Em preparação Pronto Finalizado
+
+**Entrega**
+
+Quando o pedido estiver pronto, o sistema deverá notificar o cliente que ele está pronto para retirada. Ao ser retirado, o pedido deve ser atualizado para o status finalizado. Além das etapas do cliente, o estabelecimento precisa de um acesso administrativo:
+
+**Gerenciar clientes**
+
+Com a identificação dos clientes o estabelecimento pode trabalhar em campanhas promocionais.
+
+**Gerenciar produtos e categorias**
+
+Os produtos dispostos para escolha do cliente serão gerenciados pelo estabelecimento, definindo nome, categoria, preço, descrição e imagens. Para esse sistema teremos categorias fixas: Lanche Acompanhamento Bebida Sobremesa
+
+**Acompanhamento de pedidos**
+
+Deve ser possível acompanhar os pedidos em andamento e tempo de espera de cada pedido. As informações dispostas no sistema de pedidos precisarão ser gerenciadas pelo estabelecimento através de um painel administrativo.
+
+## Link Video demonstração
+
+[Link Video demonstração](https://www.youtube.com/watch?v=zTSFxMMnUKk)
+
+## Arquitetura
+
+![arquitetura](/arquitetura.png)
+
+Nosso serviço OrdemSystem vai estar em EKS dentro da nuvem da AWS, os CRUD's dos endpoints serão feitos em um RDS na nuvem tambem.
+
+Teremos uma conexão com o mercado pago, para a realização do pagamento do pedido, onde no fluxo de inbound é feita a requisição para gerar um QRcode de pagamento, e no fluxo de outbound recebemos a confirmação do pagamento do pedido em nosso webhook.
+
+**Rodar Pod AWS**
+
+```diff
+01. Criar um cluester EKS na conta AWS
+02. Criar um node
+03. Fazer login na AWS via terminal
+04. Executar o comando aws eks update-kubeconfig --name [NOME_DO_CLUSTER]
+05. Ir até o diretório da pasta api-svc
+06. Executar o comando kubectl apply -f api-svc.yml
+06. Executar o comando kubectl apply -f configmap-api.yml
+07. Executar o comando kubectl apply -f api-deployment.yml
+08. Executar o portfoard da aplicação kubectl port-forward --address 0.0.0.0 api-deployment-76c6d54dcf-qrnjc 80:3000
 ```
 
-## Running the app
+**Rodar Pod local**
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```diff
+01. Startar o minikube local
+02. Ir até o diretório da pasta api-svc
+03. Executar o comando kubectl apply -f api-svc.yml
+04. Executar o comando kubectl apply -f configmap-api.yml
+05. Executar o comando kubectl apply -f api-deployment.yml
+06. Executar o portfoard da aplicação kubectl port-forward --address 0.0.0.0 api-deployment-76c6d54dcf-qrnjc 80:3000
 ```
 
-## Test
+## Intruções de uso
 
-```bash
-# unit tests
-$ npm run test
+- **01. Cadastro de usuário**
 
-# e2e tests
-$ npm run test:e2e
+  > POST/customers
 
-# test coverage
-$ npm run test:cov
-```
+- **02. Cadastro das categorias**
 
-## Support
+  > POST/categories
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **03. Cadastro dos produtos**
 
-## Stay in touch
+  > POST/product
+  >
+  > Com as categorias dos produtos criada, chamar o endpoint de cadastro de produto, para cadastrar o produto com sua respectiva categoria.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- **04. Realização do pedido**
 
-## License
+  > POST/orders
+  >
+  > Com as categorias e os produtos já cadastrados, chamar o endpoint de realização do pedido, para salvar o pedido feito.
 
-Nest is [MIT licensed](LICENSE).
+- **05. Cadastro do pagamento**
+  > POST/payments
+  >
+  > Para receber a confirmação do pedido, vamos receber uma requisição no webhook
+  > Para construção do webhook utilizamos uma funcionalidade do nest.js que é o Event Emitter, quando criado um pedido é acionado um evento para fazer a confirmação do pagamento.
+
+## Developers
+
+- Author - [Felipe José do Nascimento Lima](https://www.linkedin.com/in/felipe-lima-00bb62171/)
+- Author - [Victor Ivo Gomes Henrique](https://www.linkedin.com/in/victor-ivo-henrique-68557313a/)
+- Author - [Rafael Zanatta Paes Landim](https://www.linkedin.com/in/rafael-landim-81b7aa1ab/)
