@@ -8,7 +8,7 @@ import { MySqlContainer, StartedMySqlContainer } from '@testcontainers/mysql';
 import { execSync } from 'child_process';
 import { randomUUID } from 'crypto';
 import { Connection, createConnection } from 'mysql2';
-import * as request from 'supertest';
+import request from 'supertest';
 import { PaymentsService } from '../Application/services/payments.service';
 import { PaymentsAdapter } from '../Domain/Adapters/payments.adapter';
 import { PaymentEvents } from '../Domain/Enums/paymentStatus';
