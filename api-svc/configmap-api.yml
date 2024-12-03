@@ -5,15 +5,11 @@ metadata:
   labels:
     name: api-configmap
 data:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  TOKEN_MERCADO_PAGO: ${{ secrets.TOKEN_MERCADO_PAGO }}
-  USERID: ${{ secrets.USERID }}
-  POSID: ${{ secrets.POSID }}
-  NODE_LOCAL_PORT: ${{ secrets.NODE_LOCAL_PORT }}
-  ENDPOINT: ${{ secrets.ENDPOINT }}
-  QUEUE_SEND_ORDER: ${{ secrets.QUEUE_SEND_ORDER }}
-  QUEUE_RECEIVE_ORDER: ${{ secrets.QUEUE_RECEIVE_ORDER }}
-  AWS_REGION: ${{ secrets.AWS_REGION }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+  DATABASE_URL: mysql://mspayments:Fiap24mspayments@dbpayments.c6zg4ekfwyhz.us-east-1.rds.amazonaws.com:3306/dbMySqlPayments
+  TOKEN_MERCADO_PAGO: "TEST-5034444343472741-050912-53995814c25f2defa35c9887817f419a-156066762"
+  USERID: "156066762"
+  POSID: "SUC001POS001"
+  NODE_LOCAL_PORT: "3000"
+  ENDPOINT: https://sqs.us-east-1.amazonaws.com/853003360406/
+  QUEUE_SEND_ORDER: sendOrder-consumerPayment-queue
+  QUEUE_RECEIVE_ORDER: sendPayment-consumerOrder-queue
