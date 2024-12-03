@@ -1,12 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { PrismaService } from '../../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../../Infrastructure/Apis/qrcode.service';
-import { AwsSqsService } from '../../Infrastructure/Apis/sqs.service';
 import { ConfirmPaymentEvent } from '../../Infrastructure/Events/confirmPaymentEvent';
 import { PaymentEvents } from '../Enums/paymentStatus';
-import { Status } from '../Enums/status';
 import { OrdersPayments } from '../Interfaces/orders';
 import { Payments } from '../Interfaces/payments';
 import { PaymentsRepository } from '../Repositories/paymentsRepository';
@@ -17,8 +14,8 @@ export class PaymentsAdapter implements PaymentsRepository {
     private readonly prisma: PrismaService,
     private readonly qrCode: QRCodeService,
     private readonly eventEmitter: EventEmitter2,
-    private readonly sqsService: AwsSqsService,
-    private readonly config: ConfigService,
+    // private readonly sqsService: AwsSqsService,
+    // private readonly config: ConfigService,
   ) {}
 
   async getPaymentsById(id: number): Promise<Payments | null> {
