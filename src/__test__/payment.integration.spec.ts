@@ -14,10 +14,10 @@ import { PaymentsAdapter } from '../Domain/Adapters/payments.adapter';
 import { PaymentEvents } from '../Domain/Enums/paymentStatus';
 import { OrdersPayments } from '../Domain/Interfaces/orders';
 import { PaymentsRepository } from '../Domain/Repositories/paymentsRepository';
-//import { ConsumerService } from '../Infrastructure/Apis/consumer.service';
+import { ConsumerService } from '../Infrastructure/Apis/consumer.service';
 import { PrismaService } from '../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../Infrastructure/Apis/qrcode.service';
-//import { AwsSqsService } from '../Infrastructure/Apis/sqs.service';
+import { AwsSqsService } from '../Infrastructure/Apis/sqs.service';
 import { ConfirmPaymentEvent } from '../Infrastructure/Events/confirmPaymentEvent';
 import { HealthController } from '../Presentation/Health/health.controller';
 import { PrismaHealthIndicator } from '../Presentation/Health/PrismaHealthIndicator.service';
@@ -66,8 +66,8 @@ beforeAll(async () => {
       PrismaService,
       ConfigService,
       QRCodeService,
-      //AwsSqsService,
-      //ConsumerService,
+      AwsSqsService,
+      ConsumerService,
       EventEmitter2,
       { provide: PaymentsRepository, useClass: PaymentsAdapter },
     ],
@@ -93,6 +93,7 @@ beforeEach(async () => {
       DATABASE_URL: urlConnection,
     },
   });
+  console.log(process.env);
   execSync(`npx prisma migrate deploy`, {
     env: {
       ...process.env,

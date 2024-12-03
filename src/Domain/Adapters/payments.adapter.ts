@@ -1,12 +1,15 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { PrismaService } from '../../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../../Infrastructure/Apis/qrcode.service';
+import { AwsSqsService } from '../../Infrastructure/Apis/sqs.service';
 import { ConfirmPaymentEvent } from '../../Infrastructure/Events/confirmPaymentEvent';
 import { PaymentEvents } from '../Enums/paymentStatus';
 import { OrdersPayments } from '../Interfaces/orders';
 import { Payments } from '../Interfaces/payments';
 import { PaymentsRepository } from '../Repositories/paymentsRepository';
+import { Status } from '../Enums/status';
 
 @Injectable()
 export class PaymentsAdapter implements PaymentsRepository {
@@ -14,8 +17,8 @@ export class PaymentsAdapter implements PaymentsRepository {
     private readonly prisma: PrismaService,
     private readonly qrCode: QRCodeService,
     private readonly eventEmitter: EventEmitter2,
-    // private readonly sqsService: AwsSqsService,
-    // private readonly config: ConfigService,
+    private readonly sqsService: AwsSqsService,
+    private readonly config: ConfigService,
   ) {}
 
   async getPaymentsById(id: number): Promise<Payments | null> {
@@ -49,17 +52,17 @@ export class PaymentsAdapter implements PaymentsRepository {
         },
       });
 
-      // const returnOrder = {
-      //   salesOrderID: response?.salesOrderID,
-      //   orderID: response?.orderID,
-      //   amount: response?.amount,
-      //   payments: response?.status,
-      //   orderTracking: Status.IN_PREPARATION,
-      // };
+      const returnOrder = {
+        salesOrderID: response?.salesOrderID,
+        orderID: response?.orderID,
+        amount: response?.amount,
+        payments: response?.status,
+        orderTracking: Status.IN_PREPARATION,
+      };
 
-      // // RETURN FOR QUEUE ORDER
-      // const queue = this.config.get<string>('QUEUE_SEND_ORDER');
-      // await this.sqsService.sendMessage(returnOrder, queue);
+      // RETURN FOR QUEUE ORDER
+      const queue = this.config.get<string>('QUEUE_SEND_ORDER');
+      await this.sqsService.sendMessage(returnOrder, queue);
 
       return response;
     } catch (error) {
