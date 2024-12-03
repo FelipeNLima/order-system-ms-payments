@@ -1,3 +1,4 @@
+import { randomInt } from 'crypto';
 import { OrdersPayments } from '../../Domain/Interfaces/orders';
 import { Payments } from '../../Domain/Interfaces/payments';
 import prisma from '../client';
@@ -30,12 +31,11 @@ export async function createPayment(
   try {
     if (order) {
       const payments = {
-        salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
-        qrCode:
-          '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
+        salesOrderID: order?.salesOrderID,
+        qrCode: `00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***${randomInt(1)}304B5CA`,
         inStoreOrderID: '6b800cf5-e752-4de0-b092-89378a84c6a5',
         amount: 10,
-        orderID: 1,
+        orderID: order?.orderID,
       };
 
       const response = await prisma.payments.create({

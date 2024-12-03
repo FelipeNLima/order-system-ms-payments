@@ -1,4 +1,6 @@
 export interface Payments {
+  createdAt?: Date;
+  updatedAt?: Date;
   salesOrderID: string;
   inStoreOrderID: string;
   qrCode: string;
