@@ -91,7 +91,6 @@ beforeEach(async () => {
       DATABASE_URL: urlConnection,
     },
   });
-  console.log(process.env);
   execSync(`npx prisma migrate deploy`, {
     env: {
       ...process.env,
