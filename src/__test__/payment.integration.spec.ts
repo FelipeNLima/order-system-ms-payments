@@ -14,6 +14,7 @@ import { PaymentsAdapter } from '../Domain/Adapters/payments.adapter';
 import { PaymentEvents } from '../Domain/Enums/paymentStatus';
 import { OrdersPayments } from '../Domain/Interfaces/orders';
 import { PaymentsRepository } from '../Domain/Repositories/paymentsRepository';
+import { ConsumerService } from '../Infrastructure/Apis/consumer.service';
 import { PrismaService } from '../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../Infrastructure/Apis/qrcode.service';
 import { AwsSqsService } from '../Infrastructure/Apis/sqs.service';
@@ -66,6 +67,7 @@ beforeAll(async () => {
       ConfigService,
       QRCodeService,
       AwsSqsService,
+      ConsumerService,
       EventEmitter2,
       { provide: PaymentsRepository, useClass: PaymentsAdapter },
     ],
@@ -81,7 +83,6 @@ afterAll(async () => {
   await prismaClient.$disconnect();
   client.destroy();
   await container.stop();
-  console.log('test db stopped...');
 });
 
 beforeEach(async () => {
@@ -280,5 +281,4 @@ afterAll(async () => {
   await prismaClient.$disconnect();
   await container.stop();
   client.destroy();
-  console.log('test db stopped...');
 });
