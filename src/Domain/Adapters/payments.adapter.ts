@@ -6,7 +6,6 @@ import { QRCodeService } from '../../Infrastructure/Apis/qrcode.service';
 import { AwsSqsService } from '../../Infrastructure/Apis/sqs.service';
 import { ConfirmPaymentEvent } from '../../Infrastructure/Events/confirmPaymentEvent';
 import { PaymentEvents } from '../Enums/paymentStatus';
-import { Status } from '../Enums/status';
 import { OrdersPayments } from '../Interfaces/orders';
 import { Payments } from '../Interfaces/payments';
 import { PaymentsRepository } from '../Repositories/paymentsRepository';
@@ -52,17 +51,17 @@ export class PaymentsAdapter implements PaymentsRepository {
         },
       });
 
-      const returnOrder = {
-        salesOrderID: response?.salesOrderID,
-        orderID: response?.orderID,
-        amount: response?.amount,
-        payments: response?.status,
-        orderTracking: Status.IN_PREPARATION,
-      };
+      // const returnOrder = {
+      //   salesOrderID: response?.salesOrderID,
+      //   orderID: response?.orderID,
+      //   amount: response?.amount,
+      //   payments: response?.status,
+      //   orderTracking: Status.IN_PREPARATION,
+      // };
 
-      // RETURN FOR QUEUE ORDER
-      const queue = this.config.get<string>('QUEUE_SEND_ORDER');
-      await this.sqsService.sendMessage(returnOrder, queue);
+      // // RETURN FOR QUEUE ORDER
+      // const queue = this.config.get<string>('QUEUE_SEND_ORDER');
+      // await this.sqsService.sendMessage(returnOrder, queue);
 
       return response;
     } catch (error) {
