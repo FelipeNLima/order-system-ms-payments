@@ -44,15 +44,21 @@ Teremos uma conexão com o mercado pago, para a realização do pagamento do ped
 
 ## Intruções de uso
 
+Micro serviço de pagamento, desenvolvido para receber o pedido gerar o QR-Code de pagamento e verificar se o pagamento foi realizado com sucesso.
+
 - **01. Cadastro do pagamento**
+
   > GET /payments
+
   > POST /payments
+
   > PATCH /payments
 
 ## Swagger
 
-![Link-Local] -> http://localhost:3000/api/swagger
-![Link] -> endPoint/api/swagger
+link-Local: http://localhost:3000/api/swagger
+
+link: $endPoint/api/swagger
 
 ## Developers
 
