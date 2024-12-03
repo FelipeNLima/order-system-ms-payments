@@ -4,7 +4,7 @@ import { HttpModule } from '@nestjs/axios';
 import { PaymentsService } from '../../Application/services/payments.service';
 import { PaymentsAdapter } from '../../Domain/Adapters/payments.adapter';
 import { PaymentsRepository } from '../../Domain/Repositories/paymentsRepository';
-//import { ConsumerService } from '../../Infrastructure/Apis/consumer.service';
+import { ConsumerService } from '../../Infrastructure/Apis/consumer.service';
 import { PrismaService } from '../../Infrastructure/Apis/prisma.service';
 import { QRCodeService } from '../../Infrastructure/Apis/qrcode.service';
 import { AwsSqsService } from '../../Infrastructure/Apis/sqs.service';
@@ -19,7 +19,7 @@ import { PaymentsController } from './payments.controller';
     PaymentsService,
     PrismaService,
     QRCodeService,
-    //ConsumerService,
+    ConsumerService,
     AwsSqsService,
     ConfirmPaymentListener,
   ],
