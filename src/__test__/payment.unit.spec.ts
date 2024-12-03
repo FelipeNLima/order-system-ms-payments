@@ -1,4 +1,4 @@
-import { randomInt, randomUUID } from 'crypto';
+import { randomUUID } from 'crypto';
 import { OrdersPayments } from '../Domain/Interfaces/orders';
 import {
   createPayment,
@@ -36,7 +36,7 @@ describe('Unit Test Payments', () => {
       inStoreOrderID: '6b800cf5-e752-4de0-b092-89378a84c6a5',
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
-      orderID: randomInt(9),
+      orderID: 1,
       amount: 10,
       status: 'PENDING',
     };
@@ -59,72 +59,91 @@ describe('Unit Test Payments', () => {
 
   it('should Update payments status', async () => {
     const payments = {
-      amount: 10,
+      id: 1,
       createdAt: new Date('2024-10-17T22:38:38.430Z'),
-      id: 13,
+      updatedAt: new Date('2024-10-17T22:38:38.430Z'),
+      salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
       inStoreOrderID: '6b800cf5-e752-4de0-b092-89378a84c6a5',
-      orderID: 1,
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
-      salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
+      orderID: 1,
+      amount: 10,
       status: 'PAID',
-      updatedAt: new Date('2024-10-17T22:38:38.430Z'),
     };
 
     prismaMock.payments.update.mockResolvedValue(payments);
 
     await expect(updatePayment(payments)).resolves.toEqual({
-      amount: 10,
+      id: 1,
       createdAt: new Date('2024-10-17T22:38:38.430Z'),
-      id: 13,
+      updatedAt: new Date('2024-10-17T22:38:38.430Z'),
       inStoreOrderID: '6b800cf5-e752-4de0-b092-89378a84c6a5',
       orderID: 1,
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
       salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
+      amount: 10,
       status: 'PAID',
-      updatedAt: new Date('2024-10-17T22:38:38.430Z'),
     });
   });
 
   it('should Get payments by id', async () => {
-    const id = 13;
+    const id = 1;
 
     prismaMock.payments.findUnique.mockResolvedValue({
-      amount: 10,
+      id: 1,
       createdAt: new Date('2024-10-17T22:38:38.430Z'),
-      id: 13,
+      updatedAt: new Date('2024-10-17T22:38:38.430Z'),
       inStoreOrderID: '6b800cf5-e752-4de0-b092-89378a84c6a5',
       orderID: 1,
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
       salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
       status: 'PAID',
-      updatedAt: new Date('2024-10-17T22:38:38.430Z'),
+      amount: 10,
     });
 
-    const payload = await getPaymentsById(id);
-
-    await expect(getPaymentsById(id)).resolves.toEqual(payload);
+    await expect(getPaymentsById(id)).resolves.toEqual({
+      id: 1,
+      createdAt: new Date('2024-10-17T22:38:38.430Z'),
+      updatedAt: new Date('2024-10-17T22:38:38.430Z'),
+      salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
+      inStoreOrderID: '6b800cf5-e752-4de0-b092-89378a84c6a5',
+      qrCode:
+        '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
+      orderID: 1,
+      amount: 10,
+      status: 'PAID',
+    });
   });
 
   it('should Get payments by orderID', async () => {
     const orderID = 1;
 
     prismaMock.payments.findFirst.mockResolvedValue({
-      amount: 10,
-      createdAt: new Date('2024-12-03T21:05:46.492Z'),
-      id: 13,
+      id: 1,
+      createdAt: new Date('2024-10-17T22:38:38.430Z'),
+      updatedAt: new Date('2024-10-17T22:38:38.430Z'),
+      salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
       inStoreOrderID: '6b800cf5-e752-4de0-b092-89378a84c6a5',
-      orderID: 1,
       qrCode:
         '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
-      salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
+      orderID: 1,
+      amount: 10,
       status: 'PAID',
-      updatedAt: new Date('2024-12-03T21:05:46.492Z'),
     });
-    const payload = await getPaymentsByOrderId(orderID);
 
-    await expect(getPaymentsByOrderId(orderID)).resolves.toEqual(payload);
+    await expect(getPaymentsByOrderId(orderID)).resolves.toEqual({
+      id: 1,
+      createdAt: new Date('2024-10-17T22:38:38.430Z'),
+      updatedAt: new Date('2024-10-17T22:38:38.430Z'),
+      salesOrderID: '5ace7194-247b-4c4a-a7a5-1018cd092bb0',
+      inStoreOrderID: '6b800cf5-e752-4de0-b092-89378a84c6a5',
+      qrCode:
+        '00020101021243650016COM.MERCADOLIBRE0201306366b800cf5-e752-4de0-b092-89378a84c6a55204000053039865802BR5911felipe lima6009SAO PAULO62070503***6304B5CA',
+      orderID: 1,
+      amount: 10,
+      status: 'PAID',
+    });
   });
 });
