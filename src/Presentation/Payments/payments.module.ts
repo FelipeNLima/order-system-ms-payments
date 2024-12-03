@@ -19,7 +19,7 @@ import { PaymentsController } from './payments.controller';
     PaymentsService,
     PrismaService,
     QRCodeService,
-    ConsumerService,
+    //ConsumerService,
     AwsSqsService,
     ConfirmPaymentListener,
   ],

@@ -52,17 +52,17 @@ export class PaymentsAdapter implements PaymentsRepository {
         },
       });
 
-      const returnOrder = {
-        salesOrderID: response?.salesOrderID,
-        orderID: response?.orderID,
-        amount: response?.amount,
-        payments: response?.status,
-        orderTracking: Status.IN_PREPARATION,
-      };
+      // const returnOrder = {
+      //   salesOrderID: response?.salesOrderID,
+      //   orderID: response?.orderID,
+      //   amount: response?.amount,
+      //   payments: response?.status,
+      //   orderTracking: Status.IN_PREPARATION,
+      // };
 
-      // RETURN FOR QUEUE ORDER
-      const queue = this.config.get<string>('QUEUE_SEND_ORDER');
-      await this.sqsService.sendMessage(returnOrder, queue);
+      // // RETURN FOR QUEUE ORDER
+      // const queue = this.config.get<string>('QUEUE_SEND_ORDER');
+      // await this.sqsService.sendMessage(returnOrder, queue);
 
       return response;
     } catch (error) {
