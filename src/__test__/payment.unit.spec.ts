@@ -1,5 +1,4 @@
 import { randomUUID } from 'crypto';
-import { prismaMock } from './singleton';
 import { OrdersPayments } from '../Domain/Interfaces/orders';
 import {
   createPayment,
@@ -7,6 +6,7 @@ import {
   getPaymentsByOrderId,
   updatePayment,
 } from './mock/functions';
+import { prismaMock } from './singleton';
 
 describe('Unit Test Payments', () => {
   it('should Create new payments ', async () => {
